@@ -1,0 +1,16 @@
+{
+  "name": "app-title",
+  "version": "1.0.0",
+  "description": "Node module that will setup the process.title for your application automagically",
+  "keywords": ["process-title", "process", "name"],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexandru Vladutu - https://github.com/alessioalex",
+  "repository": { "type": "git", "url": "https://github.com/alessioalex/app-name.git" },
+  "license": "MIT",
+  "dependencies": {
+    "callsite": "~1.0.0"
+  }
+}
