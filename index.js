@@ -1,43 +1,24 @@
 "use strict";
 
-var stack = require('callsite');
-var path = require('path');
-var fs = require('fs');
+var getParentPkgJson = require('parent-package');
 
-function getAppName(root) {
-  var pkgPath = path.join(root, 'package.json');
-  var pkgExists = fs.existsSync(pkgPath);
-
-  if (pkgExists) {
-    return require(pkgPath).name;
-  } else {
-    var newRoot = root.split(path.sep);
-    newRoot.pop();
-    return getAppName(newRoot.join(path.sep));
+function updateProcessTitle(appName, cb) {
+  if (typeof appName === 'function') {
+    cb = appName;
+    appName = null;
   }
-}
 
-function getAppRoot() {
-  var projectPath = '';
-
-  stack().forEach(function(site, i) {
-    if (i === 1) {
-      projectPath = site.getFileName();
-    }
-  });
-
-  var root = projectPath.split(path.sep);
-  root.pop();
-  root = root.join(path.sep);
-
-  return root;
-}
-
-function updateProcessTitle() {
-  var root = getAppRoot();
-  var appName = getAppName(root);
-
-  process.title = appName;
+  if (appName) {
+    process.title = appName;
+    cb && cb();
+  } else {
+    getParentPkgJson(require.main.filename, function(err, data, pkgJsonPath) {
+      if (!err) {
+        process.title = data.name;
+        cb && cb();
+      }
+    });
+  }
 }
 
 module.exports = updateProcessTitle;

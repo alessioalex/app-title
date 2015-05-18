@@ -33,9 +33,15 @@ setInterval(function() {
 }
 ```
 
-Run `node index.js` and then `top`:
+Run `node index.js` and then `top`.
 
 ![pic](https://cldup.com/Sa_EgrJNhu.png)
+
+*Protip*: you can also pass in a custom title directly like in the example below:
+
+```js
+require('app-title')('myApp:v2.0')
+```
 
 ### License
 
